@@ -38,6 +38,7 @@ function App() {
     return (
       <Checkout
         total={total}
+        items={items}
         onFinish={handlePagamentoConcluido}
       />
     );
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+
       <header className="mb-8 text-center">
         <h1 className="text-3xl font-bold text-gray-900">
           Studio Beauty 💅
@@ -63,9 +65,11 @@ function App() {
         </p>
       </header>
 
+
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         <main className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
+
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -73,9 +77,12 @@ function App() {
               onAdd={addItem}
             />
           ))}
+
         </main>
 
+
         <aside className="lg:col-span-1">
+
           <Cart
             items={items}
             total={total}
@@ -84,9 +91,11 @@ function App() {
             onRemove={removeItem}
             onCheckout={handleCheckout}
           />
+
         </aside>
 
       </div>
+
     </div>
   );
 }
