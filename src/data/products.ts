@@ -2,6 +2,7 @@ import cocaZero from "../assets/coca-cola.png";
 import bebidaLactea from "../assets/nescau.png";
 import kapoUva from "../assets/suco-kapo.png";
 import michelobUltra from "../assets/michelob-ultra.png";
+import aguacomGas from "../assets/agua_gas.png";
 
 export const products = [
   {
@@ -27,5 +28,11 @@ export const products = [
     nome: "Michelob Ultra",
     preco: 12,
     imagem: michelobUltra,
+  },
+  {
+    id: 6,
+    nome: "Água com Gás",
+    preco: 4,
+    imagem: aguacomGas,
   },
 ];
