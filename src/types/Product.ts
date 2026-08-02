@@ -1,7 +1,12 @@
-// Define o formato que todo produto do cardápio deve seguir
 export interface Product {
-  id: number;
-  nome: string;
-  preco: number;
-  imagem: string;
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  price: number;
+  quantity: number;
+  image_url: string | null;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
 }

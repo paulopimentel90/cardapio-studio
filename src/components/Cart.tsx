@@ -1,13 +1,12 @@
 import type { CartItem } from "../types/Cart";
 import { formatCurrency } from "../utils/formatCurrency";
 
-
 interface CartProps {
   items: CartItem[];
   total: number;
-  onIncrease: (productId: number) => void;
-  onDecrease: (productId: number) => void;
-  onRemove: (productId: number) => void;
+  onIncrease: (productId: string) => void;
+  onDecrease: (productId: string) => void;
+  onRemove: (productId: string) => void;
   onCheckout: () => void;
 }
 
@@ -29,7 +28,9 @@ export function Cart({
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-4">
-      <h2 className="text-xl font-bold text-gray-900">Seu pedido</h2>
+      <h2 className="text-xl font-bold text-gray-900">
+        Seu pedido
+      </h2>
 
       <div className="flex flex-col gap-3">
         {items.map((item) => (
@@ -39,16 +40,22 @@ export function Cart({
           >
             <div>
               <p className="font-medium text-gray-800">
-                {item.product.nome}
+                {item.product.name}
               </p>
+
               <p className="text-sm text-gray-500">
-                {formatCurrency(item.product.preco * item.quantidade)}
-             </p>
+                {formatCurrency(
+                  item.product.price * item.quantidade
+                )}
+              </p>
             </div>
 
             <div className="flex items-center gap-3">
+
               <button
-                onClick={() => onDecrease(item.product.id)}
+                onClick={() =>
+                  onDecrease(item.product.id)
+                }
                 className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold"
               >
                 −
@@ -59,27 +66,35 @@ export function Cart({
               </span>
 
               <button
-                onClick={() => onIncrease(item.product.id)}
+                onClick={() =>
+                  onIncrease(item.product.id)
+                }
                 className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold"
               >
                 +
               </button>
 
               <button
-                onClick={() => onRemove(item.product.id)}
+                onClick={() =>
+                  onRemove(item.product.id)
+                }
                 className="ml-2 text-red-500 text-sm hover:underline"
               >
                 Remover
               </button>
+
             </div>
           </div>
         ))}
       </div>
 
       <div className="flex items-center justify-between pt-2">
-        <span className="text-lg font-semibold text-gray-900">Total</span>
+        <span className="text-lg font-semibold text-gray-900">
+          Total
+        </span>
+
         <span className="text-2xl font-bold text-gray-900">
-            {formatCurrency(total)}
+          {formatCurrency(total)}
         </span>
       </div>
 

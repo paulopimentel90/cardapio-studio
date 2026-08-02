@@ -1,28 +1,31 @@
 import type { Product } from "../types/Product";
 import { formatCurrency } from "../utils/formatCurrency";
 
-// Define quais informações esse componente espera receber de fora
 interface ProductCardProps {
   product: Product;
   onAdd: (product: Product) => void;
 }
 
-export function ProductCard({ product, onAdd }: ProductCardProps) {
+export function ProductCard({
+  product,
+  onAdd,
+}: ProductCardProps) {
   return (
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 flex flex-col items-center text-center">
+
       <img
-        src={product.imagem}
-        alt={product.nome}
+        src={product.image_url ?? ""}
+        alt={product.name}
         className="w-32 h-32 object-cover rounded-xl mb-3"
       />
 
       <h3 className="text-lg font-semibold text-gray-800">
-        {product.nome}
+        {product.name}
       </h3>
 
       <p className="text-xl font-bold text-gray-900 mt-1">
-        {formatCurrency(product.preco)}
-    </p>
+        {formatCurrency(product.price)}
+      </p>
 
       <button
         onClick={() => onAdd(product)}
@@ -30,6 +33,7 @@ export function ProductCard({ product, onAdd }: ProductCardProps) {
       >
         Adicionar
       </button>
+
     </div>
   );
 }

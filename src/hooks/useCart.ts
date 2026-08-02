@@ -13,58 +13,73 @@ export function useCart() {
       );
 
       if (existingItem) {
-        // Já existe: apenas aumenta a quantidade em 1
         return currentItems.map((item) =>
           item.product.id === product.id
-            ? { ...item, quantidade: item.quantidade + 1 }
+            ? {
+                ...item,
+                quantidade: item.quantidade + 1,
+              }
             : item
         );
       }
 
-      // Não existe ainda: adiciona novo item com quantidade 1
-      return [...currentItems, { product, quantidade: 1 }];
+      return [
+        ...currentItems,
+        {
+          product,
+          quantidade: 1,
+        },
+      ];
     });
   }
 
-  // Aumenta a quantidade de um item específico
-  function increaseItem(productId: number) {
+  // Aumenta a quantidade
+  function increaseItem(productId: string) {
     setItems((currentItems) =>
       currentItems.map((item) =>
         item.product.id === productId
-          ? { ...item, quantidade: item.quantidade + 1 }
+          ? {
+              ...item,
+              quantidade: item.quantidade + 1,
+            }
           : item
       )
     );
   }
 
-  // Diminui a quantidade de um item; remove automaticamente se chegar a 0
-  function decreaseItem(productId: number) {
+  // Diminui a quantidade
+  function decreaseItem(productId: string) {
     setItems((currentItems) =>
       currentItems
         .map((item) =>
           item.product.id === productId
-            ? { ...item, quantidade: item.quantidade - 1 }
+            ? {
+                ...item,
+                quantidade: item.quantidade - 1,
+              }
             : item
         )
         .filter((item) => item.quantidade > 0)
     );
   }
 
-  // Remove um item completamente do carrinho
-  function removeItem(productId: number) {
+  // Remove completamente
+  function removeItem(productId: string) {
     setItems((currentItems) =>
-      currentItems.filter((item) => item.product.id !== productId)
+      currentItems.filter(
+        (item) => item.product.id !== productId
+      )
     );
   }
 
-  // Esvazia o carrinho
+  // Limpa carrinho
   function clearCart() {
     setItems([]);
   }
 
-  // Calcula o valor total do carrinho
+  // Total
   const total = items.reduce(
-    (soma, item) => soma + item.product.preco * item.quantidade,
+    (acc, item) => acc + item.product.price * item.quantidade,
     0
   );
 

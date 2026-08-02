@@ -6,14 +6,15 @@ export async function saveOrder(
   total: number
 ) {
   const products = items.map((item) => ({
-    name: item.product.nome,
+    id: item.product.id,
+    name: item.product.name,
     quantity: item.quantidade,
-    unit_price: item.product.preco,
-    subtotal: item.product.preco * item.quantidade,
+    unit_price: item.product.price,
+    subtotal: item.product.price * item.quantidade,
   }));
 
-  console.log("Enviando para Supabase:");
-  console.log(products);
+  console.log("Enviando pedido para o Supabase...");
+  console.table(products);
 
   const { data, error } = await supabase
     .from("orders")
@@ -24,12 +25,13 @@ export async function saveOrder(
     .select()
     .single();
 
-  console.log("Resposta do Supabase:");
-  console.log({ data, error });
-
   if (error) {
+    console.error(error);
     throw error;
   }
+
+  console.log("Pedido salvo com sucesso.");
+  console.log(data);
 
   return data;
 }

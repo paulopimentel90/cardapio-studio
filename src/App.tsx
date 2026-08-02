@@ -1,15 +1,22 @@
-import { useState } from "react";
-import { products } from "./data/products";
+import { useEffect, useState } from "react";
+
 import { ProductCard } from "./components/ProductCard";
 import { Cart } from "./components/Cart";
 import { Checkout } from "./pages/Checkout";
 import { ThankYou } from "./pages/ThankYou";
+
 import { useCart } from "./hooks/useCart";
+
+import { ProductService } from "./services/products";
+import type { Product } from "./types/Product";
 
 type Tela = "cardapio" | "checkout" | "obrigado";
 
 function App() {
   const [tela, setTela] = useState<Tela>("cardapio");
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const {
     items,
@@ -20,6 +27,21 @@ function App() {
     clearCart,
     total,
   } = useCart();
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await ProductService.findAll();
+        setProducts(data);
+      } catch (error) {
+        console.error("Erro ao carregar produtos:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, []);
 
   function handleCheckout() {
     setTela("checkout");
@@ -32,6 +54,14 @@ function App() {
   function handleNovaCompra() {
     clearCart();
     setTela("cardapio");
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-lg text-gray-600">Carregando produtos...</p>
+      </div>
+    );
   }
 
   if (tela === "checkout") {
@@ -65,21 +95,27 @@ function App() {
         </p>
       </header>
 
-
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <main className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
 
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onAdd={addItem}
-            />
-          ))}
+          {products.length === 0 ? (
+            <div className="col-span-full text-center py-10">
+              <p className="text-gray-500">
+                Nenhum produto disponível.
+              </p>
+            </div>
+          ) : (
+            products.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAdd={addItem}
+              />
+            ))
+          )}
 
         </main>
-
 
         <aside className="lg:col-span-1">
 

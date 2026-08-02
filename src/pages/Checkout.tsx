@@ -35,11 +35,13 @@ export function Checkout({
       onFinish();
     } catch (error) {
       console.error("Erro ao registrar pedido:", error);
+      alert("Não foi possível registrar o pedido. Tente novamente.");
     }
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6 gap-6">
+
       <h1 className="text-2xl font-bold text-gray-900">
         Escaneie para pagar
       </h1>
@@ -51,7 +53,7 @@ export function Checkout({
       </p>
 
       <p className="text-gray-500 text-center max-w-xs">
-        Abra o aplicativo do seu banco, escolha Pix e escaneie o código acima.
+        Abra o aplicativo do seu banco, escolha Pix e escaneie o QR Code acima.
       </p>
 
       <button
@@ -60,6 +62,7 @@ export function Checkout({
       >
         Já paguei
       </button>
+
     </div>
   );
 }
